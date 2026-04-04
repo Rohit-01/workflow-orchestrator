@@ -9,6 +9,7 @@ description: |
   - If the response code is not 200, it will send a Slack alert and log an "unhealthy" message.
   - If the response code is 200, it will log a "healthy" message.
   - It's scheduled to run daily at 9:00 AM UTC, but you can adjust the `cron` expression or disable it.
+  - Slack notifications require the namespace secret `SLACK_WEBHOOK_URI` (Slack Incoming Webhook URL).
 
 labels:
   name: Application Health check
@@ -18,11 +19,6 @@ inputs:
     type: URI
     required: false
     description: "Full URL to check (e.g. http://EC2_PUBLIC_IP:5000/health). Set via trigger or execution inputs."
-
-  - id: slack_webhook_uri
-    type: URI
-    defaults: "https://example.invalid/redacted-slack-webhook-use-KESTRA-secret"
-    description: "Slack incoming webhook URL for notifications"
 
 tasks:
   - id: http_request
@@ -53,7 +49,7 @@ tasks:
       - id: server_healthy_alert
         type: io.kestra.plugin.notifications.slack.SlackIncomingWebhook
         description: Send a Slack alert with Healthy Status.
-        url: "{{ inputs.slack_webhook_uri }}"
+        url: "{{ secret('SLACK_WEBHOOK_URI') }}"
         payload: |
           {
             "channel": "#alerts",
