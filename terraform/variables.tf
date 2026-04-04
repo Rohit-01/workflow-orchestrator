@@ -37,39 +37,40 @@ variable "log_retention_days" {
 }
 
 # ─── GCP Variables ───────────────────────────────────────────────────────────
+# (commented out when GCP module is disabled)
 
-variable "gcp_project_id" {
-  description = "GCP project ID (required)"
-  type        = string
-  default = "cl-demo-sandbox"
-}
+# variable "gcp_project_id" {
+#   description = "GCP project ID (required)"
+#   type        = string
+#   default = "cl-demo-sandbox"
+# }
 
-variable "gcp_region" {
-  description = "GCP region to deploy resources"
-  type        = string
-  default     = "europe-north2"
-}
+# variable "gcp_region" {
+#   description = "GCP region to deploy resources"
+#   type        = string
+#   default     = "europe-north2"
+# }
 
-variable "gcp_zone" {
-  description = "GCP zone to deploy resources"
-  type        = string
-  default     = "europe-north2-a"
-}
+# variable "gcp_zone" {
+#   description = "GCP zone to deploy resources"
+#   type        = string
+#   default     = "europe-north2-a"
+# }
 
-variable "gcp_machine_type" {
-  description = "GCP VM machine type"
-  type        = string
-  default     = "e2-micro"
-}
+# variable "gcp_machine_type" {
+#   description = "GCP VM machine type"
+#   type        = string
+#   default     = "e2-micro"
+# }
 
-variable "gcp_ssh_user" {
-  description = "SSH username for GCP VM"
-  type        = string
-  default     = "ubuntu"
-}
+# variable "gcp_ssh_user" {
+#   description = "SSH username for GCP VM"
+#   type        = string
+#   default     = "ubuntu"
+# }
 
-variable "gcp_ssh_public_key_path" {
-  description = "Path to the SSH public key file for GCP VM"
-  type        = string
-  default     = "/Users/rahulwagh/Downloads/aws-demo/rwagh_aws_key.pub"
-}
+# variable "gcp_ssh_public_key_path" {
+#   description = "Path to the SSH public key file for GCP VM"
+#   type        = string
+#   default     = "/Users/rahulwagh/Downloads/aws-demo/rwagh_aws_key.pub"
+# }

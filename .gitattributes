@@ -1,0 +1,5 @@
+# Normalize line endings: LF for Terraform/YAML on Linux/macOS and servers
+* text=auto
+
+*.tf text eol=lf
+*.yml text eol=lf

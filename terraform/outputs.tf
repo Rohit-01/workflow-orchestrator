@@ -28,22 +28,22 @@ output "aws_cloudwatch_log_stream" {
   value       = module.aws.cloudwatch_log_stream
 }
 
-output "gcp_vm_external_ip" {
-  description = "External IP address of the GCP VM instance"
-  value       = module.gcp.external_ip
-}
+# output "gcp_vm_external_ip" {
+#   description = "External IP address of the GCP VM instance"
+#   value       = module.gcp.external_ip
+# }
 
-output "gcp_app_url" {
-  description = "URL to access the Flask app on GCP"
-  value       = module.gcp.app_url
-}
+# output "gcp_app_url" {
+#   description = "URL to access the Flask app on GCP"
+#   value       = module.gcp.app_url
+# }
 
-output "gcp_health_check_url" {
-  description = "Health check URL for the Flask app on GCP"
-  value       = module.gcp.health_url
-}
+# output "gcp_health_check_url" {
+#   description = "Health check URL for the Flask app on GCP"
+#   value       = module.gcp.health_url
+# }
 
-output "gcp_ssh_command" {
-  description = "SSH command to connect to the GCP VM instance"
-  value       = module.gcp.ssh_command
-}
+# output "gcp_ssh_command" {
+#   description = "SSH command to connect to the GCP VM instance"
+#   value       = module.gcp.ssh_command
+# }

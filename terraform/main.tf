@@ -9,13 +9,13 @@ module "aws" {
   log_retention_days        = var.log_retention_days
 }
 
-module "gcp" {
-  source = "./modules/gcp"
-
-  project_id          = var.gcp_project_id
-  region              = var.gcp_region
-  zone                = var.gcp_zone
-  machine_type        = var.gcp_machine_type
-  ssh_user            = var.gcp_ssh_user
-  ssh_public_key_path = var.gcp_ssh_public_key_path
-}
+# module "gcp" {
+#   source = "./modules/gcp"
+#
+#   project_id          = var.gcp_project_id
+#   region              = var.gcp_region
+#   zone                = var.gcp_zone
+#   machine_type        = var.gcp_machine_type
+#   ssh_user            = var.gcp_ssh_user
+#   ssh_public_key_path = var.gcp_ssh_public_key_path
+# }
