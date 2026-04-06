@@ -18,6 +18,12 @@ output "aws_ssh_command" {
   value       = module.aws.ssh_command
 }
 
+output "aws_generated_private_key_pem" {
+  description = "Generated private key in PEM format when AWS public key path is left empty"
+  value       = module.aws.generated_private_key_pem
+  sensitive   = true
+}
+
 output "aws_cloudwatch_log_group" {
   description = "CloudWatch log group streaming Flask app logs"
   value       = module.aws.cloudwatch_log_group

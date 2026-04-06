@@ -1,0 +1,5 @@
+aws_profile         = "personal-aws"
+aws_region          = "ap-south-1"
+aws_key_name        = "flask-app-key"
+aws_public_key_path = ""
+aws_instance_type   = "t2.micro"

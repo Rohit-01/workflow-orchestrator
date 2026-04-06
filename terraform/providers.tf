@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
     # google = {
     #   source  = "hashicorp/google"
     #   version = "~> 5.0"
@@ -14,7 +18,8 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  profile = var.aws_profile
+  region  = var.aws_region
 }
 
 # provider "google" {

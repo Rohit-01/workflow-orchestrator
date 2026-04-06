@@ -17,12 +17,12 @@ labels:
 inputs:
   - id: server_uri
     type: URI
-    required: false
+    defaults: "YOUR_APP_HEALTH_ENDPOINT_HERE" # e.g. http://EC2_PUBLIC_IP:5000/health
     description: "Full URL to check (e.g. http://EC2_PUBLIC_IP:5000/health). Set via trigger or execution inputs."
 
   - id: slack_webhook_uri
     type: URI
-    defaults: "https://example.invalid/slack-incoming-webhook-placeholder"
+    defaults: "put-your-own-slack-webhook-url-here"
     description: "Slack Incoming Webhook URL. Replace the default placeholder with your real webhook (or override when executing)."
 
 tasks:
@@ -45,6 +45,18 @@ tasks:
         systemMessage: "You are an SRE. The Flask application health check has just failed on AWS EC2. Respond in a single line with no line breaks, using this format: Cause: <likely cause> | Fix: <immediate remediation step>"
         prompt: |
           The Flask app at {{ inputs.server_uri }} failed its health check. Diagnose the most likely cause and immediate remediation step.
+      - id: server_unreachable_alert
+        type: io.kestra.plugin.notifications.slack.SlackIncomingWebhook
+        description: Send a Slack alert if the server cannot be reached.
+        url: "{{ inputs.slack_webhook_uri }}"
+        payload: |
+          {
+            "channel": "#alerts",
+            "text": "The server {{ inputs.server_uri }} is down❌. Response Code: {{ outputs.http_request.code }}. Possible Cause: {{ outputs.ai_diagnosis_on_failure.textOutput }}"
+          }
+      - id: log_failure_explanation
+        type: io.kestra.plugin.core.log.Log
+        message: "The server {{ inputs.server_uri }} is down. Response Code: {{ outputs.http_request.code }}. Possible Cause: {{ outputs.ai_diagnosis_on_failure.textOutput }}"
     else:
       - id: healthy
         type: io.kestra.plugin.core.log.Log
@@ -67,7 +79,7 @@ triggers:
     # disabled: true # Uncomment to disable scheduled runs initially
     cron: "0 9 * * *" # Example: Run daily at 9 AM UTC
     inputs:
-      server_uri: "http://REPLACE_WITH_AWS_IP:5000/health"  # paste IP from terraform output aws_ec2_public_ip
+      server_uri: "put-your-own-server-uri-here"  # paste IP from terraform output aws_ec2_public_ip
 
 # ─── Provider config (applied to all AIAgent tasks in this flow) ─────────────
 #
@@ -80,9 +92,14 @@ pluginDefaults:
   - type: io.kestra.plugin.ai.agent.AIAgent
     values:
       provider:
-        type: io.kestra.plugin.ai.provider.OpenAI
-        apiKey: "{{ secret('OPENAI_API_KEY') }}"
-        modelName: gpt-4o-mini
+        type: io.kestra.plugin.ai.provider.GoogleGemini
+        modelName: gemini-2.5-flash
+        apiKey: "PUT-YOUR-OWN"
+        configuration:
+          logRequests: true
+          logResponses: true
+          responseFormat:
+            type: TEXT
 
       # ── Google Gemini alternative ──────────────────────────────────────────
       # provider:

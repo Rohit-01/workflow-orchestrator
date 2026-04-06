@@ -6,6 +6,12 @@ variable "aws_region" {
   default     = "eu-central-1"
 }
 
+variable "aws_profile" {
+  description = "AWS CLI profile Terraform should use"
+  type        = string
+  default     = "default"
+}
+
 variable "aws_key_name" {
   description = "Name of the AWS key pair to create"
   type        = string
@@ -13,9 +19,9 @@ variable "aws_key_name" {
 }
 
 variable "aws_public_key_path" {
-  description = "Path to the SSH public key file for AWS EC2"
+  description = "Path to the SSH public key file for AWS EC2. Leave empty to let Terraform generate one."
   type        = string
-  default     = "/Users/rahulwagh/Downloads/aws-demo/rwagh_aws_key.pub"
+  default     = ""
 }
 
 variable "aws_instance_type" {
@@ -72,5 +78,5 @@ variable "log_retention_days" {
 # variable "gcp_ssh_public_key_path" {
 #   description = "Path to the SSH public key file for GCP VM"
 #   type        = string
-#   default     = "/Users/rahulwagh/Downloads/aws-demo/rwagh_aws_key.pub"
+#   default     = ""
 # }

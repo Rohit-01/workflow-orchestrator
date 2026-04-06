@@ -160,9 +160,21 @@ resource "aws_security_group" "flask_app" {
 
 # ─── Key Pair ─────────────────────────────────────────────────────────────────
 
+locals {
+  use_existing_public_key = length(trimspace(var.public_key_path)) > 0
+  public_key_content      = local.use_existing_public_key ? file(pathexpand(var.public_key_path)) : tls_private_key.flask_app[0].public_key_openssh
+}
+
+resource "tls_private_key" "flask_app" {
+  count = local.use_existing_public_key ? 0 : 1
+
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "aws_key_pair" "flask_app" {
   key_name   = var.key_name
-  public_key = file(var.public_key_path)
+  public_key = local.public_key_content
 }
 
 # ─── AMI Lookup (Ubuntu 22.04 LTS) ───────────────────────────────────────────
